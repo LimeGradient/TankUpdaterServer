@@ -8,7 +8,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/download', (req, res) => {
-    res.send("/index.html")
+    res.sendFile('/index.html', {root: __dirname})
 })
 
 app.listen(process.env.PORT || 8080, () => {

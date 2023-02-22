@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const port = 8080
 
 let version = '{"version": "1.0"}'
 
@@ -9,5 +8,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Server up at ${port}`);
+    console.log(`Server up at ${process.env.PORT}`);
 })

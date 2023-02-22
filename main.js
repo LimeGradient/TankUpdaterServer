@@ -7,6 +7,10 @@ app.get('/', (req, res) => {
     res.send(version);
 })
 
-app.listen(process.env.PORT, () => {
+app.get('/download', (req, res) => {
+    res.sendFile(path.join(__dirname, '/index.html'));
+})
+
+app.listen(process.env.PORT || 8080, () => {
     console.log(`Server up at ${process.env.PORT}`);
 })

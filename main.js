@@ -7,6 +7,6 @@ app.get('/', (req, res) => {
     res.send(version);
 })
 
-app.listen(port, () => {
+app.listen(process.env.PORT, () => {
     console.log(`Server up at ${process.env.PORT}`);
 })

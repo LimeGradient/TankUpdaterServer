@@ -8,15 +8,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/download', (req, res) => {
-    res.type(".js");
-    res.send(`
-        window.onload = function(){
-            var a = document.createElement("a");
-            a.href="https://github.com/LimeGradient/xmath.c/archive/refs/heads/master.zip";
-            a.download=true;
-            a.click();
-        };
-    `)
+    res.send("/index.html")
 })
 
 app.listen(process.env.PORT || 8080, () => {

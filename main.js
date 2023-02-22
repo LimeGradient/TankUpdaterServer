@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-let version = '{"version": "1.0"}'
+let version = 'version = 1.0'
 
 app.get('/', (req, res) => {
     res.send(version);

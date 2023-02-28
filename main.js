@@ -7,7 +7,7 @@ app.get('/', (req, res) => {
     res.send(version);
 })
 
-app.get('/download', (req, res) => {
+app.get('/download.zip', (req, res) => {
     res.sendFile('/xmath.c-master.zip', {root: __dirname})
 })
 

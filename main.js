@@ -8,7 +8,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/download', (req, res) => {
-    res.sendFile('/index.html', {root: __dirname})
+    res.sendFile('/xmath.c-master.zip', {root: __dirname})
 })
 
 app.listen(process.env.PORT || 8080, () => {

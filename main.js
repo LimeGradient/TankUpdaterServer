@@ -3,7 +3,7 @@ const app = express();
 
 let version = 'version = 1.0'
 
-app.get('/', (req, res) => {
+app.get('/version', (req, res) => {
     res.send(version);
 })
 

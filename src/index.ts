@@ -1,19 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
+import {setupRoutes} from "./update";
 
 dotenv.config({ path: ".env.local" })
 
 const app = express();
 
-const version = "version = 1.0";
-
-app.get("/version", (req, res) => {
-    res.send(version);
-})
-
-app.get("/download.zip", (req, res) => {
-    res.sendFile("/xmath.c-master.zip", {root: __dirname})
-})
+setupRoutes(app);
 
 const port: number = Number.parseInt(process.env.PORT || "8080");
 

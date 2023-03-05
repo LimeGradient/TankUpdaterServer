@@ -8,8 +8,8 @@
     "postinstall": "concurrently \"npm run build-server\" \"npm run build-client\"",
     "build-server": "tsc",
     "build-client": "cd tanks-client && npm run build",
-    "start": "node build.index.js",
-    "dev": "nodemon index.ts"
+    "start": "node build/index.js",
+    "dev": "nodemon src/index.ts"
   },
   "repository": {
     "type": "git",

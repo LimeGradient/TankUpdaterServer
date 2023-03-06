@@ -1,10 +1,13 @@
 import {createProxyServer} from "http-proxy";
 import {type Server} from "http";
-import {type Express} from "express"
+import express, {type Express} from "express"
 import process from "process";
 
 export function setupProxy(server: Server, expressApp: Express): void  {
-    console.log(process.env.NODE_ENV);
+    if (process.env.NODE_ENV == "production") {
+        expressApp.use(express.static("tanks-client/dist"));
+        return;
+    }
 
     const proxyInstance = createProxyServer({
         target: "http://127.0.0.1:5173",

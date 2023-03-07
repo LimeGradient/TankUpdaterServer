@@ -5,14 +5,20 @@ import Button from './Button.vue';
 <template>
     <div class="container">
         <h1>Tanks!</h1>
-        <div>
+        <div class="button-row">
             <Button to="/download">Download Updater</Button>
             <Button to="/upload">Upload New Build</Button>
         </div>
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
+
+.button-row {
+    display: flex;
+    flex-direction: row;
+}
+
 .container {
     display: flex;
     flex-direction: column;

@@ -18,4 +18,8 @@ import Button from './Button.vue';
     flex-direction: column;
     align-items: center;
 }
+
+.container h1 {
+    font-family: stencil;
+}
 </style>

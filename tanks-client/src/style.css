@@ -5,8 +5,8 @@ html, body {
 }
 
 body {
-  background-color: #090635;
-
+  /* background-color: #090635; */
+  background-image: radial-gradient(at 50% 30%, #0e0a49,#110e36);
   color: rgb(255, 252, 248);
 }
 

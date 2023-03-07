@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 document.addEventListener("mousemove", (e) => {
-    Array.from(document.getElementsByClassName("fancy-button-container")).forEach((buttonEl) => {
+    Array.from(document.getElementsByClassName("fancy-button")).forEach((buttonEl) => {
         const button = <HTMLElement> buttonEl;
         const rect = button.getBoundingClientRect(),
             x = e.clientX - rect.x,

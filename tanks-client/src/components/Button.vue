@@ -9,39 +9,19 @@ const props = defineProps({
 
 <template>
 <RouterLink v-bind="$props" :to="props.to" custom v-slot="{isActive, href, navigate}">
-    <div class="fancy-button-container" @click="navigate">
-        <div class="fancy-button-border" @click="navigate"></div>
-        <button class="fancy-button" v-bind="$attrs" @click="navigate">
+    <button class="fancy-button" v-bind="$attrs" @click="navigate">
+        <div class="content">
             <slot />
-        </button>
-    </div>
+        </div>
+    </button>
 </RouterLink>
 </template>
 
 <style scoped lang="postcss">
 
-button {
+.fancy-button {
     all: unset;
-
-    width: calc(100% - 2px);
-    height: calc(100% - 2px);
-
-    border-radius: inherit;
-
-    position: relative;
-    top: 1px;
-    left: 2px;
-
-    z-index: 2;
-
-    text-align: center;
-
-    font-size: 20px;
-
-    background-color: rgb(23, 20, 78);
-}
-
-.fancy-button-container {
+    
     border-radius: 6px;
 
     margin: 5px;
@@ -49,15 +29,28 @@ button {
     width: 200px;
     height: 50px;
 
-    background-color: rgba(94, 92, 193, 0.5);
+    text-align: center;
+
+    font-size: 20px;
+
+    background-color: rgb(73, 111, 198);
 
     position: relative;
+
+    .content {
+        position: relative;
+        z-index: 5;
+    }
 
     &:hover::before {
         opacity: 1;
     }
 
-    &::before, .fancy-button-border {
+    &:active::after {
+        opacity: 1;
+    }
+
+    &::before {
         position: absolute;
 
         height: 100%;
@@ -70,35 +63,16 @@ button {
         
         border-radius: inherit;
 
+
+        background-image: radial-gradient(
+            500px circle at var(--mouse-x) var(--mouse-y),
+            rgba(8, 10, 98, 0.15),
+            transparent 40%
+        );
+
         opacity: 0;
 
         transition: opacity 500ms;
     }
-
-    &::before {
-        background-image: radial-gradient(
-            800px circle at var(--mouse-x) var(--mouse-y),
-            rgba(255, 255, 255, .06),
-            transparent 40%
-        );
-
-        z-index: 3;
-    }
-
-    .fancy-button-border {
-        background-image: radial-gradient(
-            400px circle at var(--mouse-x) var(--mouse-y),
-            rgba(255, 255, 255, .2),
-            transparent 40%
-        );
-
-        z-index: 1;
-    }
-}
-</style>
-
-<style lang="postcss">
-.button-row:hover > .fancy-button-container > .fancy-button-border {
-    opacity: 1;
 }
 </style>

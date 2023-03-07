@@ -13,6 +13,6 @@ body {
 @font-face {
   font-family: stencil;
   src: 
-  /* url("./assets/old_school_united_stencil.ttf"), */
+  url("./assets/old_school_united_stencil.ttf"),
   url("./assets/old_school_united_stencil-webfont.woff") format("woff");
 }

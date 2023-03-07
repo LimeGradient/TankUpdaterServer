@@ -2,7 +2,6 @@
   "name": "tanks-client",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite --host",
     "prebuild": "npm i --production=false",
@@ -10,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "postcss": "^8.4.21",
+    "postcss-nested": "^6.0.1",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },

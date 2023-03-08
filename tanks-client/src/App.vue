@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Tank from './components/Tank.vue';
 
 document.addEventListener("mousemove", (e) => {
     Array.from(document.getElementsByClassName("fancy-button")).forEach((buttonEl) => {
@@ -16,6 +17,7 @@ document.addEventListener("mousemove", (e) => {
 
 <template>
     <RouterView></RouterView>
+    <Tank></Tank>
 </template>
 
 <style scoped>

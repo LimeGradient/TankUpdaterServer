@@ -33,13 +33,14 @@ const props = defineProps({
 
     font-size: 20px;
 
-    background-color: rgb(73, 111, 198);
+    background-color: white;
 
     position: relative;
 
     .content {
         position: relative;
         z-index: 5;
+        color: var(--dark-green)
     }
 
     &:hover::before {

@@ -61,11 +61,11 @@ setInterval(updateTank, 10)
     top: 0px;
     left: 0px;
 
-    z-index: -1;
+    /* z-index: -1; */
 }
 
 #tank {
-    fill: rgba(0, 0, 0, .5);
+    fill: var(--dark-green);
 }
 
 text {

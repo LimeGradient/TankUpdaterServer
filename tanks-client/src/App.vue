@@ -16,9 +16,20 @@ document.addEventListener("mousemove", (e) => {
 </script>
 
 <template>
-    <RouterView></RouterView>
     <Tank></Tank>
+    <div class="content">
+        <RouterView></RouterView>
+    </div>
 </template>
 
 <style scoped>
+.content {
+    margin: auto;
+    background-color: var(--lighter-gray);
+    width: 60%;
+    height: 100%;
+
+    /* position: relative;
+    z-index: -3; */
+}
 </style>

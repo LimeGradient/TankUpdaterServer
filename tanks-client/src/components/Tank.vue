@@ -1,8 +1,8 @@
 <template>
     <svg id="tanks">
-        <rect id="tank" :x="tankX - tankWidth / 2" :y="tankY" :width="tankWidth" :height="tankHeight" 
+        <rect id="tank" :x="tankX - tankWidth" :y="tankY - tankHeight / 2" :width="tankWidth" :height="tankHeight" 
         :transform="`rotate(${tankAngle * 180 / Math.PI}, ${tankX}, ${tankY})`"></rect>
-        <text x="10" y="10">{{ deltaX }}, {{ deltaY }}, {{ tankAngle * 180 / Math.PI }}</text>
+        <!-- <text x="10" y="10">{{ deltaX }}, {{ deltaY }}, {{ tankAngle * 180 / Math.PI }}</text> -->
     </svg>
 </template>
 
@@ -36,7 +36,7 @@ function updateTank() {
     deltaX.value = mouseX.value - tankX.value;
     deltaY.value = mouseY.value - tankY.value;
 
-    if (Math.abs(deltaX.value) < moveSpeed && Math.abs(deltaY.value) < moveSpeed {
+    if (Math.abs(deltaX.value) < moveSpeed && Math.abs(deltaY.value) < moveSpeed) {
         tankX.value = mouseX.value;
         tankY.value = mouseY.value;
         return;

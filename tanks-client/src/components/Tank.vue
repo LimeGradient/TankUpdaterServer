@@ -2,18 +2,16 @@
     <svg id="tanks">
         <rect id="tank" :x="tankX - tankWidth" :y="tankY - tankHeight / 2" :width="tankWidth" :height="tankHeight" 
         :transform="`rotate(${tankAngle * 180 / Math.PI}, ${tankX}, ${tankY})`"></rect>
-        <text x="10" y="10">{{ checkDistance(tankX, tankY, tankAngle) }}, {{ linesIntersect(tankX, tankY, tankX + Math.cos(tankAngle) * 1000, tankY + Math.sin(tankAngle) * 1000, line[0], line[1], line[2], line[3]) }}</text>
+        <text x="10" y="10">{{ checkDistance(tankX, tankY, tankAngle) }}, {{ line == undefined ? "" : linesIntersect(tankX, tankY, tankX + Math.cos(tankAngle) * 1000, tankY + Math.sin(tankAngle) * 1000, line[0], line[1], line[2], line[3]) }}</text>
     </svg>
 </template>
 
 <script setup lang="ts">
-import { ref } from '@vue/reactivity';
+import { ref, onMounted } from 'vue';
 
 const moveSpeed = 10;
 
-
-const rect = document.getElementsByClassName("tank-avoid")[0].getBoundingClientRect();
-const line = ref([rect.right, rect.bottom, rect.left, rect.bottom])
+const line = ref<number[]>()
 
 const mouseX = ref(10);
 const mouseY = ref(10);
@@ -63,7 +61,7 @@ function linesIntersect(x1: number, y1: number, x2: number, y2: number,
     const lambda = ((y4 - y3) * (x4 - x1) + (x3 - x4) * (y4 - y1)) / determinant;
     const gamma = ((y1 - y2) * (x4 - x1) + (x2 - x1) * (y4 - y1)) / determinant;
 
-    if ((0 <= lambda && lambda <= 1 && 0 <= gamma && gamma <= 1)) return;
+    if (!(0 <= lambda && lambda <= 1 && 0 <= gamma && gamma <= 1)) return;
 
     return Math.sqrt(lambda * (x2 - x1) * lambda * (x2 - x1) + lambda * (y2 - y1) * lambda * (y2 - y1));
 }
@@ -122,7 +120,20 @@ function checkDistance(x: number, y: number, angle: number): any[] {
         const otherPosX = x + Math.cos(angle) * distance;
         const otherPosY = y + Math.sin(angle) * distance;
 
-        // const newDistance = linesIntersect(x, y, otherPosX, otherPosY, line.value[0], line.value[1], line.value[2], line.value[3]);
+        const lines = [
+            [rect.left, rect.top, rect.right, rect.top],
+            [rect.right, rect.top, rect.right, rect.bottom],
+            [rect.right, rect.bottom, rect.left, rect.bottom],
+            [rect.left, rect.bottom, rect.left, rect.top]
+        ]
+
+        lines.forEach((line) => {
+            const newDistance = linesIntersect(x, y, otherPosX, otherPosY, line[0], line[1], line[2], line[3]);
+
+            if (newDistance == undefined) return;
+
+            distance = Math.min(distance, newDistance)
+        })
     })
 
     return [distance];

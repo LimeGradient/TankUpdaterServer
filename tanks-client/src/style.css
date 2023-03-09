@@ -19,6 +19,10 @@ html, body, #app {
   z-index: -3; */
 }
 
+.tank-avoid {
+  /* background-color: red; */
+}
+
 @font-face {
   font-family: stencil;
   src: 

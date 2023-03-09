@@ -3,7 +3,7 @@ import Button from './Button.vue';
 </script>
 
 <template>
-    <div class="container">
+    <div class="container tank-avoid">
         <h1>Tanks!</h1>
         <div class="button-row">
             <Button to="/download">Download Updater</Button>
@@ -33,7 +33,5 @@ import Button from './Button.vue';
     /* font-family: stencil; TODO: make this work */
         color: var(--dark-green)
     }
-
-    background-color: red;
 }
 </style>

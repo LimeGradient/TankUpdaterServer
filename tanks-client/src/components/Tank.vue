@@ -67,19 +67,6 @@ function smoothApproach(value: number, target: number, speed: number): number {
 }
 
 function updateTank() {
-    // deltaX.value = mouseX.value - tankX.value;
-    // deltaY.value = mouseY.value - tankY.value;
-
-    // if (Math.abs(deltaX.value) < moveSpeed / 2 && Math.abs(deltaY.value) < moveSpeed / 2) {
-    //     tankX.value = mouseX.value;
-    //     tankY.value = mouseY.value;
-    // } else {
-    //     tankAngle.value = Math.atan2(deltaY.value, deltaX.value);
-
-    //     tankX.value += Math.cos(tankAngle.value) * moveSpeed;
-    //     tankY.value += Math.sin(tankAngle.value) * moveSpeed;
-    // }
-
     const distances = lineAngles.map((val) => checkDistance(val));
     const distance = distances.reduce((pervious, current) => Math.min(pervious, current))
 
@@ -98,8 +85,6 @@ function updateTank() {
 
     tankX.value += Math.cos(tankAngle.value) * moveSpeed;
     tankY.value += Math.sin(tankAngle.value) * moveSpeed;
-
-    // debug.value = [...distances, turnDirection.value]
 
     drawLines();
 }

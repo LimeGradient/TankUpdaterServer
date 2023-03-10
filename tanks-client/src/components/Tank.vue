@@ -20,7 +20,8 @@ type Line = {
     length: number;
 }
 
-const moveSpeed = 10;
+const moveSpeed = 3;
+const turnSpeed = Math.PI / 12;
 
 const lineAngles = [
     -Math.PI / 6,
@@ -35,13 +36,15 @@ const debug = ref<any[]>();
 const mouseX = ref(10);
 const mouseY = ref(10);
 
-const tankX = ref(0);
-const tankY = ref(0);
+const tankX = ref(100);
+const tankY = ref(100);
 
 const tankWidth = ref(50);
 const tankHeight = ref(30);
 
-const tankAngle = ref(10);
+const tankAngle = ref(.1);
+
+const turnDirection = ref(0);
 
 const deltaX = ref(0);
 const deltaY = ref(0);
@@ -54,22 +57,38 @@ function mouseMove(event: MouseEvent) {
 }
 
 function updateTank() {
-    deltaX.value = mouseX.value - tankX.value;
-    deltaY.value = mouseY.value - tankY.value;
+    // deltaX.value = mouseX.value - tankX.value;
+    // deltaY.value = mouseY.value - tankY.value;
 
-    if (Math.abs(deltaX.value) < moveSpeed / 2 && Math.abs(deltaY.value) < moveSpeed / 2) {
-        tankX.value = mouseX.value;
-        tankY.value = mouseY.value;
+    // if (Math.abs(deltaX.value) < moveSpeed / 2 && Math.abs(deltaY.value) < moveSpeed / 2) {
+    //     tankX.value = mouseX.value;
+    //     tankY.value = mouseY.value;
+    // } else {
+    //     tankAngle.value = Math.atan2(deltaY.value, deltaX.value);
+
+    //     tankX.value += Math.cos(tankAngle.value) * moveSpeed;
+    //     tankY.value += Math.sin(tankAngle.value) * moveSpeed;
+    // }
+
+    const distances = lineAngles.map((val) => checkDistance(val));
+
+    if (distances.reduce((pervious, current) => Math.min(pervious, current)) <= 100) {
+
+        if (distances[0] > distances[2]) turnDirection.value = -1;
+        else turnDirection.value = 1;
+
     } else {
-        tankAngle.value = Math.atan2(deltaY.value, deltaX.value);
-
-        tankX.value += Math.cos(tankAngle.value) * moveSpeed;
-        tankY.value += Math.sin(tankAngle.value) * moveSpeed;
+        turnDirection.value = 0;
     }
 
-    const forwardDistance = checkDistance(0);
+    console.log(turnDirection.value)
 
-    debug.value = [forwardDistance]
+    tankAngle.value += turnSpeed * turnDirection.value;
+
+    tankX.value += Math.cos(tankAngle.value) * moveSpeed;
+    tankY.value += Math.sin(tankAngle.value) * moveSpeed;
+
+    debug.value = [...distances, turnDirection.value]
 
     drawLines();
 }

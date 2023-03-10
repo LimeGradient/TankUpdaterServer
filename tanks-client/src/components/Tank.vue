@@ -2,9 +2,10 @@
     <svg id="tanks">
         <rect id="tank" :x="tankX - tankWidth" :y="tankY - tankHeight / 2" :width="tankWidth" :height="tankHeight" 
         :transform="`rotate(${tankAngle * 180 / Math.PI}, ${tankX}, ${tankY})`"></rect>
-        <text x="10" y="10">{{ debug }}</text>
+        <text x="10" y="10" v-if="debug">{{ debug }}</text>
 
-        <line v-for="line in lines" :x1="line.startX" :y1="line.startY" 
+        <line v-for="line in lines" v-if="debug"
+        :x1="line.startX" :y1="line.startY" 
         :x2="line.startX + Math.cos(line.angle) * line.length"
         :y2="line.startY + Math.sin(line.angle) * line.length"></line>
     </svg>
@@ -20,8 +21,10 @@ type Line = {
     length: number;
 }
 
-const moveSpeed = 3;
-const turnSpeed = Math.PI / 12;
+const moveSpeed = 2;
+const targetTurnSpeed = Math.PI / 12;
+const turnSpeed = .01;
+const maxDistance = 200;
 
 const lineAngles = [
     -Math.PI / 6,
@@ -31,7 +34,7 @@ const lineAngles = [
 
 const lines = ref<Line[]>();
 
-const debug = ref<any[]>();
+const debug = ref(false);
 
 const mouseX = ref(10);
 const mouseY = ref(10);
@@ -43,6 +46,7 @@ const tankWidth = ref(50);
 const tankHeight = ref(30);
 
 const tankAngle = ref(.1);
+const targetTankAngle = ref(tankAngle.value);
 
 const turnDirection = ref(0);
 
@@ -54,6 +58,12 @@ document.addEventListener("mousemove", mouseMove);
 function mouseMove(event: MouseEvent) {
     mouseX.value = event.clientX;
     mouseY.value = event.clientY;
+}
+
+function smoothApproach(value: number, target: number, speed: number): number {
+    if (Math.abs(target - value) < speed) return target;
+
+    return value + Math.sign(target - value) * speed;
 }
 
 function updateTank() {
@@ -71,8 +81,9 @@ function updateTank() {
     // }
 
     const distances = lineAngles.map((val) => checkDistance(val));
+    const distance = distances.reduce((pervious, current) => Math.min(pervious, current))
 
-    if (distances.reduce((pervious, current) => Math.min(pervious, current)) <= 100) {
+    if (distance <= maxDistance) {
 
         if (distances[0] > distances[2]) turnDirection.value = -1;
         else turnDirection.value = 1;
@@ -81,14 +92,14 @@ function updateTank() {
         turnDirection.value = 0;
     }
 
-    console.log(turnDirection.value)
+    targetTankAngle.value = tankAngle.value + targetTurnSpeed * turnDirection.value;
 
-    tankAngle.value += turnSpeed * turnDirection.value;
+    tankAngle.value = smoothApproach(tankAngle.value, targetTankAngle.value, turnSpeed * (maxDistance / distance));
 
     tankX.value += Math.cos(tankAngle.value) * moveSpeed;
     tankY.value += Math.sin(tankAngle.value) * moveSpeed;
 
-    debug.value = [...distances, turnDirection.value]
+    // debug.value = [...distances, turnDirection.value]
 
     drawLines();
 }

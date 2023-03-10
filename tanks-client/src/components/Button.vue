@@ -67,7 +67,7 @@ const props = defineProps({
 
         background-image: radial-gradient(
             700px circle at var(--mouse-x) var(--mouse-y),
-            rgba(8, 10, 98, 0.15),
+            rgba(21, 72, 21, 0.211),
             transparent 40%
         );
 

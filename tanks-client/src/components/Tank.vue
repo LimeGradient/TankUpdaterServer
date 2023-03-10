@@ -2,16 +2,35 @@
     <svg id="tanks">
         <rect id="tank" :x="tankX - tankWidth" :y="tankY - tankHeight / 2" :width="tankWidth" :height="tankHeight" 
         :transform="`rotate(${tankAngle * 180 / Math.PI}, ${tankX}, ${tankY})`"></rect>
-        <text x="10" y="10">{{ checkDistance(tankX, tankY, tankAngle) }}, {{ line == undefined ? "" : linesIntersect(tankX, tankY, tankX + Math.cos(tankAngle) * 1000, tankY + Math.sin(tankAngle) * 1000, line[0], line[1], line[2], line[3]) }}</text>
+        <text x="10" y="10">{{ debug }}</text>
+
+        <line v-for="line in lines" :x1="line.startX" :y1="line.startY" 
+        :x2="line.startX + Math.cos(line.angle) * line.length"
+        :y2="line.startY + Math.sin(line.angle) * line.length"></line>
     </svg>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 
+type Line = {
+    startX: number;
+    startY: number;
+    angle: number;
+    length: number;
+}
+
 const moveSpeed = 10;
 
-const line = ref<number[]>()
+const lineAngles = [
+    -Math.PI / 6,
+    0,
+    Math.PI / 6
+]
+
+const lines = ref<Line[]>();
+
+const debug = ref<any[]>();
 
 const mouseX = ref(10);
 const mouseY = ref(10);
@@ -38,16 +57,35 @@ function updateTank() {
     deltaX.value = mouseX.value - tankX.value;
     deltaY.value = mouseY.value - tankY.value;
 
-    if (Math.abs(deltaX.value) < moveSpeed && Math.abs(deltaY.value) < moveSpeed) {
+    if (Math.abs(deltaX.value) < moveSpeed / 2 && Math.abs(deltaY.value) < moveSpeed / 2) {
         tankX.value = mouseX.value;
         tankY.value = mouseY.value;
-        return;
+    } else {
+        tankAngle.value = Math.atan2(deltaY.value, deltaX.value);
+
+        tankX.value += Math.cos(tankAngle.value) * moveSpeed;
+        tankY.value += Math.sin(tankAngle.value) * moveSpeed;
     }
 
-    tankAngle.value = Math.atan2(deltaY.value, deltaX.value);
+    const forwardDistance = checkDistance(0);
 
-    tankX.value += Math.cos(tankAngle.value) * moveSpeed;
-    tankY.value += Math.sin(tankAngle.value) * moveSpeed;
+    debug.value = [forwardDistance]
+
+    drawLines();
+}
+
+function drawLines() {
+
+    lines.value = lineAngles.map((val) => {return line(val)});
+}
+
+function line(angleOffset: number): Line  {
+    return {
+        startX: tankX.value,
+        startY: tankY.value,
+        angle: tankAngle.value + angleOffset,
+        length: checkDistance(angleOffset)
+    }
 }
 
 setInterval(updateTank, 10)
@@ -66,7 +104,9 @@ function linesIntersect(x1: number, y1: number, x2: number, y2: number,
     return Math.sqrt(lambda * (x2 - x1) * lambda * (x2 - x1) + lambda * (y2 - y1) * lambda * (y2 - y1));
 }
 
-function checkDistance(x: number, y: number, angle: number): any[] {
+function checkDistance(angle: number = 0, x: number = tankX.value, y: number = tankY.value): number {
+    angle += tankAngle.value;
+
     let distance = Number.MAX_VALUE;
 
     angle %= 2 * Math.PI;
@@ -136,7 +176,7 @@ function checkDistance(x: number, y: number, angle: number): any[] {
         })
     })
 
-    return [distance];
+    return distance;
 }
 
 </script>
@@ -159,5 +199,9 @@ function checkDistance(x: number, y: number, angle: number): any[] {
 
 text {
     fill: red
+}
+
+line { 
+    stroke: red;
 }
 </style>

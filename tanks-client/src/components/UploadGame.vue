@@ -2,7 +2,7 @@
 <div class="container tank-avoid">
     <h1>Upload</h1>
 
-    <form>
+    <form @submit.prevent="submitForm">
         <label for="zip-upload">
             <img src="../assets/upload.svg" class="upload-svg">
         </label>
@@ -19,6 +19,8 @@ import Button from './Button.vue';
 
 function submitForm() {
     console.log("boo")
+
+    return false;
 }
 </script>
 

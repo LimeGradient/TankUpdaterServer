@@ -12,7 +12,7 @@ const emits = defineEmits<{
 </script>
 
 <template>
-<button class="fancy-button" v-bind="$attrs" @click="$emit('click')">
+<button class="fancy-button" v-bind="$attrs" @click.prevent="$emit('click')">
     <div class="content">
         <slot />
     </div>

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import Button from './Button.vue';
+import RouterButton from './RouterButton.vue';
 </script>
 
 <template>
     <div class="container tank-avoid">
         <h1>Tanks!</h1>
         <div class="button-row">
-            <Button to="/download">Download Updater</Button>
-            <Button to="/upload">Upload New Build</Button>
+            <RouterButton to="/download">Download Updater</RouterButton>
+            <RouterButton to="/upload">Upload New Build</RouterButton>
         </div>
     </div>
 </template>

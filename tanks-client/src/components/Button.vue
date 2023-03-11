@@ -5,16 +5,25 @@ const props = defineProps({
     // @ts-ignore
     ...RouterLink.props
 });
+
+const emits = defineEmits<{
+    (e: "click"): void
+}>()
 </script>
 
 <template>
-<RouterLink v-bind="$props" :to="props.to" custom v-slot="{isActive, href, navigate}">
+<RouterLink v-if="props.to !== undefined" v-bind="$props" :to="props.to" custom v-slot="{isActive, href, navigate}">
     <button class="fancy-button" v-bind="$attrs" @click="navigate">
         <div class="content">
             <slot />
         </div>
     </button>
 </RouterLink>
+<button class="fancy-button" v-bind="$attrs" @click="$emit('click')">
+    <div class="content">
+        <slot />
+    </div>
+</button>
 </template>
 
 <style scoped lang="postcss">

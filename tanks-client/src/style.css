@@ -23,6 +23,12 @@ html, body, #app {
   /* background-color: red; */
 }
 
+h1 {
+        font-size: 3.5em;
+    /* font-family: stencil; TODO: make this work */
+        color: var(--dark-green)
+    }
+
 @font-face {
   font-family: stencil;
   src: 

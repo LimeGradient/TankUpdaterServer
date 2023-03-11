@@ -27,11 +27,5 @@ import Button from './Button.vue';
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    h1 {
-        font-size: 3.5em;
-    /* font-family: stencil; TODO: make this work */
-        color: var(--dark-green)
-    }
 }
 </style>

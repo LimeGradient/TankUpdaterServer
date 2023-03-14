@@ -1,4 +1,5 @@
 import express from "express";
+import fileUpload from "express-fileupload";
 import dotenv from "dotenv";
 import {createServer} from "http";
 import {setupRoutes} from "./update";
@@ -8,6 +9,8 @@ dotenv.config({ path: ".env.local" })
 
 const app = express();
 const server = createServer(app);
+
+app.use(fileUpload());
 
 setupRoutes(app);
 setupProxy(server, app);

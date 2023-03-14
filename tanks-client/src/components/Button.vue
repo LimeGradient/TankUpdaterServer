@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 
-const props = defineProps({
-    // @ts-ignore
-    ...RouterLink.props
-});
-
 const emits = defineEmits<{
     (e: "click"): void
 }>()
@@ -26,7 +21,7 @@ const emits = defineEmits<{
     
     border-radius: 6px;
 
-    margin: 5px;
+    /* margin: 5px; */
 
     width: 200px;
     height: 50px;

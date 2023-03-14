@@ -1,6 +1,7 @@
 import {type Express} from "express";
 import fileUpload from "express-fileupload";
 import { promises as fsp, constants } from "fs";
+import * as path from "path";
 
 export let version = "1.0"
 
@@ -27,7 +28,9 @@ export function setupRoutes(app: Express): void {
 
         zip = <fileUpload.UploadedFile>zip;
 
-        const newPath = __dirname + "/upload" + zip.name;
+        const newPath = path.resolve(dir + "/" + zip.name);
+
+        console.log(newPath)
 
         zip.mv(newPath, (err) => {
             if (err) {

@@ -18,6 +18,10 @@ export function setupRoutes(app: Express): void {
         const dir = "./upload";
         console.log("post")
 
+        await fsp.rm(dir, {recursive: true, force: true}).catch((e) => {
+            console.error(e)
+        })
+
         await fsp.access(dir, constants.R_OK | constants.W_OK).catch(async (e) => {
             await fsp.mkdir(dir);
         })
@@ -28,7 +32,7 @@ export function setupRoutes(app: Express): void {
 
         zip = <fileUpload.UploadedFile>zip;
 
-        const newPath = path.resolve(dir + "/" + zip.name);
+        const newPath = path.resolve(dir + "/upload.zip");
 
         console.log(newPath)
 

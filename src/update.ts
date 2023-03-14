@@ -22,9 +22,7 @@ export function setupRoutes(app: Express): void {
             console.error(e)
         })
 
-        await fsp.access(dir, constants.R_OK | constants.W_OK).catch(async (e) => {
-            await fsp.mkdir(dir);
-        })
+        await fsp.mkdir(dir);
 
         let zip = req.files?.zip;
 

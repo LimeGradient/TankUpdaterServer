@@ -1,6 +1,7 @@
 import {type Express} from "express";
 import fileUpload from "express-fileupload";
 import { promises as fsp, constants } from "fs";
+import JSZip from "jszip";
 import * as path from "path";
 
 export let version = "1.0";
@@ -24,6 +25,8 @@ export function setupRoutes(app: Express): void {
 
         await fsp.mkdir(dir);
 
+        const newPath = path.resolve(dir + "/upload.zip");
+
         await new Promise((resolve, reject) => {
 
             let zip = req.files?.zip;
@@ -31,8 +34,6 @@ export function setupRoutes(app: Express): void {
             if (zip == undefined) return;
 
             zip = <fileUpload.UploadedFile>zip;
-
-            const newPath = path.resolve(dir + "/upload.zip");
 
             zip.mv(newPath, (err) => {
                 if (err) {
@@ -44,6 +45,16 @@ export function setupRoutes(app: Express): void {
 
                 resolve(zip);
             })
-        })
+        });
+
+        const fileObject = await fsp.readFile(newPath);
+
+        const zipObject = await JSZip.loadAsync(fileObject);
+
+        zipObject.file("version.TANKS", version);
+
+        const generatedZip = await zipObject.generateAsync({ type: "nodebuffer" });
+
+        await fsp.writeFile(dir + "/completed.zip", generatedZip);
     })
 }

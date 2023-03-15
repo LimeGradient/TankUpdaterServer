@@ -3,7 +3,7 @@ import fileUpload from "express-fileupload";
 import { promises as fsp, constants } from "fs";
 import * as path from "path";
 
-export let version = "1.0"
+export let version = "1.0";
 
 export function setupRoutes(app: Express): void {
     app.get("/update/version", (req, res) => {
@@ -24,23 +24,26 @@ export function setupRoutes(app: Express): void {
 
         await fsp.mkdir(dir);
 
-        let zip = req.files?.zip;
+        await new Promise((resolve, reject) => {
 
-        if (zip == undefined) return;
+            let zip = req.files?.zip;
 
-        zip = <fileUpload.UploadedFile>zip;
+            if (zip == undefined) return;
 
-        const newPath = path.resolve(dir + "/upload.zip");
+            zip = <fileUpload.UploadedFile>zip;
 
-        console.log(newPath)
+            const newPath = path.resolve(dir + "/upload.zip");
 
-        zip.mv(newPath, (err) => {
-            if (err) {
-                console.log(err);
-                return;
-            }
+            zip.mv(newPath, (err) => {
+                if (err) {
+                    console.log(err);
+                    reject(err)
+                }
+    
+                console.log("sucessfully uploaded zip");
 
-            console.log("sucessfully uploaded zip");
+                resolve(zip);
+            })
         })
     })
 }

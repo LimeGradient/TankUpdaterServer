@@ -12,7 +12,7 @@ export function setupRoutes(app: Express): void {
     })
 
     app.get("/update/download", (req, res) => {
-        res.sendFile("/xmath.c-master.zip", {root: __dirname})
+        res.sendFile(path.resolve("./upload/completed.zip"))
     })
 
     app.post("/update/new-zip", async (req, res) => {

@@ -1,6 +1,8 @@
 {
     "recommendations": [
         "vue.volar",
-        "Vue.vscode-typescript-vue-plugin"
+        "vue.vscode-typescript-vue-plugin",
+        "eamodio.gitlens",
+        "christian-kohler.npm-intellisense"
     ]
 }

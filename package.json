@@ -5,7 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "concurrently \"npm run build-server\" \"npm run build-client\"",
+    "postinstall": "if test \"$NODE_ENV\" = \"production\"; then npm run build; fi",
+    "build": "concurrently \"npm run build-server\" \"npm run build-client\"",
     "build-server": "tsc",
     "build-client": "cd tanks-client && npm run build",
     "start": "node build/index.js",

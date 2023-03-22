@@ -56,5 +56,7 @@ export function setupRoutes(app: Express): void {
         const generatedZip = await zipObject.generateAsync({ type: "nodebuffer" });
 
         await fsp.writeFile(dir + "/completed.zip", generatedZip);
+
+        res.status(200);
     })
 }

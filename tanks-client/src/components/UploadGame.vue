@@ -44,6 +44,10 @@ function submitForm() {
     fetch("/update/new-zip", {
         method: "POST",
         body: formData
+    }).then((response) => {
+        if (response.ok) {
+            alert("Success")
+        }
     })
 
     return false;

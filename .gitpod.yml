@@ -1,8 +1,8 @@
 
 tasks:
   - name: Script Task
-    init: npm run instalDependencies # runs during prebuild => https://www.gitpod.io/docs/configure/projects/prebuilds
-    command: echo 'start script'
+    init: npm i # runs during prebuild => https://www.gitpod.io/docs/configure/projects/prebuilds
+    command: npm run dev
 
 # List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
 ports:

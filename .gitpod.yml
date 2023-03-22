@@ -9,7 +9,10 @@ ports:
   - name: Frontend
     description: Port 8080 for the frontend
     port: 8080
-    # onOpen: open-preview
+# onOpen: open-preview
 
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
-
+vscode:
+  extensions:
+    - Vue.volar
+    - eamodio.gitlens

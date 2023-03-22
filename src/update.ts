@@ -17,7 +17,6 @@ export function setupRoutes(app: Express): void {
 
     app.post("/update/new-zip", async (req, res) => {
         const dir = "./upload";
-        console.log("post")
 
         await fsp.rm(dir, {recursive: true, force: true}).catch((e) => {
             console.error(e)
@@ -57,6 +56,8 @@ export function setupRoutes(app: Express): void {
 
         await fsp.writeFile(dir + "/completed.zip", generatedZip);
 
-        res.status(200);
+        console.log("saved zip")
+
+        res.status(200).end();
     })
 }

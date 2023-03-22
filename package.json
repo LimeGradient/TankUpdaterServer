@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "if test \"$NODE_ENV\" = \"production\"; then npm run build; fi",
+    "installDependencies": "npm i && cd tanks-client && npm i",
     "build": "concurrently \"npm run build-server\" \"npm run build-client\"",
     "build-server": "tsc",
     "build-client": "cd tanks-client && npm run build",

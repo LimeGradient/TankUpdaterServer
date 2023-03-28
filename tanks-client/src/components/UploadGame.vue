@@ -15,6 +15,12 @@
         <!-- <div class="break"></div> -->
         <Button class="sumbit-button" @click="submitForm">Submit</Button>
     </form>
+
+    <div v-if="status != 'waiting'">
+        <span v-if="status == 'processing'">Processing upload...</span>
+        <span v-else-if="status == 'completed'">Upload complete in {{ Math.floor(time / 1000) }} seconds</span>
+        <span v-else-if="status == 'error'">Upload failed.</span>
+    </div>
 </div>
 </template>
 
@@ -27,6 +33,9 @@ const zipUpload = ref<HTMLInputElement | null>(null);
 
 const fileName = ref("");
 const version = ref("")
+
+const time = ref(-1);
+const status = ref("waiting")
 
 function submitForm() {
     const formData = new FormData();
@@ -41,12 +50,21 @@ function submitForm() {
     formData.append("zip", file);
     formData.append("version", version.value)
 
+    status.value = "processing";
+
     fetch("/update/new-zip", {
         method: "POST",
         body: formData
     }).then((response) => {
-        if (response.ok) {
-            alert("Success")
+        if (!response.ok) {
+            status.value = "error";
+        } else {
+            status.value = "completed"
+        }
+        return response.json()
+    }).then(response => {
+        if (status.value == "completed") {
+            time.value = response.time;
         }
     })
 

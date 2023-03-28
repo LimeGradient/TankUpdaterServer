@@ -18,6 +18,8 @@ export function setupRoutes(app: Express): void {
     app.post("/update/new-zip", async (req, res) => {
         const dir = "./upload";
 
+        const startTime = Date.parse((new Date()).toDateString());
+
         await fsp.rm(dir, {recursive: true, force: true}).catch((e) => {
             console.error(e)
         })
@@ -58,6 +60,8 @@ export function setupRoutes(app: Express): void {
 
         console.log("saved zip")
 
-        res.status(200).end();
+        res.status(200).send({
+            "time": Date.parse((new Date()).toDateString()) - startTime,
+        })
     })
 }

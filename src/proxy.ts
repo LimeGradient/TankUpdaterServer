@@ -34,8 +34,9 @@ export function setupProxy(server: Server, expressApp: Express): void  {
         console.log(req.url)
         if (req.url?.includes("socket.io")) {
             proxyInstance.ws(req, socket, head)
+        } else {
+            proxyInstance.ws(req, socket, head, {target: "http://127.0.0.1:5173", ws: true})
         }
-        proxyInstance.ws(req, socket, head, {target: "http://127.0.0.1:5173", ws: true})
     })
 
     // return proxyInstance;

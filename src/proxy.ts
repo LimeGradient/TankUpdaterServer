@@ -11,7 +11,7 @@ export function setupProxy(server: Server, expressApp: Express): void  {
     
     expressApp.get("/signal", (req, res) => {
         proxyInstance.web(req, res, {
-            target: "http://127.0.0.1:8080",
+            target: "http://127.0.0.1:4000",
         })
     });
     

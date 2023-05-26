@@ -18,6 +18,7 @@ export function setupProxy(server: Server, expressApp: Express): void  {
         expressApp.use(express.static("tanks-client/dist"));
     } else {
         expressApp.get("/*", (req, res) => {
+            console.log("Um how")
             proxyInstance.web(req, res, {
                 target: "http://127.0.0.1:5173"
             })

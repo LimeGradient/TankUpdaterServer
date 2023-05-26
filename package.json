@@ -10,7 +10,7 @@
     "build-server": "tsc",
     "build-client": "cd tanks-client && npm run build",
     "start": "concurrently \"node build/index.js\" \"node build/signal.js\"",
-    "dev": "concurrently \"nodemon src/index.ts\" \"cd tanks-client && npm run dev\""
+    "dev": "concurrently \"nodemon src/index.ts\" \"cd tanks-client && npm run dev\" \"nodemon src/signal.ts\""
   },
   "repository": {
     "type": "git",

@@ -29,6 +29,7 @@ export function setupProxy(server: Server, expressApp: Express): void  {
     })
 
     server.on("upgrade", (req, socket, head) => {
+        console.log(req)
         proxyInstance.ws(req, socket, head)
     })
 

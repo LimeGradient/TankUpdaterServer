@@ -9,7 +9,11 @@ export function setupProxy(server: Server, expressApp: Express): void  {
         target: "http://127.0.0.1:4000",
         ws: true,
     });
-    
+
+    expressApp.get("/", (req, res, next) => {
+        next()
+    })
+
     if (process.env.NODE_ENV == "production") {
         expressApp.use(express.static("tanks-client/dist"));
     } else {

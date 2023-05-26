@@ -30,6 +30,7 @@ export function setupProxy(server: Server, expressApp: Express): void  {
     })
 
     server.on("upgrade", (req, socket, head) => {
+        console.log(req.url)
         if (req.url?.includes("socket.io")) {
             proxyInstance.ws(req, socket, head)
         }
